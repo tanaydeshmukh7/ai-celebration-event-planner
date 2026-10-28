@@ -1,0 +1,17 @@
+import { createBrowserClient } from "@supabase/ssr";
+
+export function isSupabaseConfigured(): boolean {
+  return !!(
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY &&
+    process.env.NEXT_PUBLIC_SUPABASE_URL.startsWith("https://") &&
+    !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("your-project-id")
+  );
+}
+
+export function createClient() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "placeholder-anon-key";
+
+  return createBrowserClient(supabaseUrl, supabaseAnonKey);
+}
